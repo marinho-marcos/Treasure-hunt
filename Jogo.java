@@ -1,7 +1,10 @@
+import java.io.Serializable;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Jogo {
+public class Jogo implements Serializable{
+    private static final long serialVersionUID = 1L;    //controle de versao da classe
+
     private ElementoTabuleiro[][] tabuleiro;
     private Jogador jogador;
 
@@ -49,6 +52,7 @@ public class Jogo {
     }
 
     public void executar(){
+        GerenciadorDeSave gerenciador = new GerenciadorDeSave();
         Scanner scanner = new Scanner(System.in);
 
         while(jogador.getMovimentos() > 0 && jogador.getTesouros() > 0){
@@ -56,7 +60,7 @@ public class Jogo {
 
             System.out.println("Pontuacao: " + jogador.getPontuacao());
             System.out.println("Movimentos restantes: " + jogador.getMovimentos());
-            System.out.print("\nDigite um comando (W/A/S/D): ");
+            System.out.print("\nDigite um comando (W/A/S/D) para mover ou SAIR: ");
 
             String comando = scanner.nextLine().toUpperCase();
 
@@ -77,6 +81,13 @@ public class Jogo {
                 case "S": 
                     novaLinha++; 
                     break;
+                
+                case "SAIR":
+                    System.out.println("Salvando jogo e finalizando...");
+                    gerenciador.salvarJogo(this);
+                    scanner.close();
+                    return;
+
                 default:
                     System.out.println("Comando inválido! Use W, A, S ou D.");
                     continue;
@@ -123,7 +134,7 @@ public class Jogo {
         System.out.println("Tesouros: " + (3 - jogador.getTesouros()));
         System.out.println("Armadilhas: " + (3 - jogador.getArmadilhas()));
 
-        scanner.close();
+        gerenciador.excluirSave();
     }
 
     private void exibirTabuleiro(){

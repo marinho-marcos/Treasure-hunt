@@ -1,7 +1,10 @@
+import java.io.Serializable;
 import java.util.Set;
 import java.util.HashSet;
 
-public class Jogador {
+public class Jogador implements Serializable {
+    private static final long serialVersionUID = 1L;    //controle de versao da classe
+
     private int pontuacao;
     private int movimentos;
     private int linha;

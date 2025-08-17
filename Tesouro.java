@@ -1,4 +1,6 @@
 public class Tesouro extends ElementoTabuleiro {
+    private static final long serialVersionUID = 1L;    //controle de versao da classe
+
     public void interagir(Jogador jogador){
         jogador.setPontuacao(jogador.getPontuacao() + 3);
         jogador.setTesouros(jogador.getTesouros() - 1);
